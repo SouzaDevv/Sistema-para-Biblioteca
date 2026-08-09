@@ -11,7 +11,7 @@ from programa import (
     listar_acervo,
 )
 
-# ---------- Cores da escola ----------
+
 AMARELO = "#F5C400"
 PRETO = "#1A1A1A"
 BRANCO = "#FFFFFF"
@@ -23,7 +23,7 @@ def iniciar_app():
     janela.geometry("850x520")
     janela.configure(bg=PRETO)
 
-    # ---------- Estilo geral ----------
+
     estilo = ttk.Style()
     estilo.theme_use("clam")
 
@@ -92,14 +92,13 @@ def iniciar_app():
     abas.add(aba_ativos, text="Empréstimos Ativos")
     abas.add(aba_atencao, text="Atenção")
 
-    # Combobox de livros, usada na aba Cadastrar — precisa ser atualizada
-    # sempre que o acervo mudar, então guardamos a referência aqui fora.
+
     combo_livro = None
 
     def carregar_titulos_acervo():
         return [livro["titulo"] for livro in listar_acervo()]
 
-    # ---------- ABA CADASTRAR ----------
+
     ttk.Label(aba_cadastrar, text="Novo Empréstimo", style="Titulo.TLabel").grid(
         row=0, column=0, columnspan=2, padx=20, pady=(20, 15), sticky="w"
     )
@@ -158,7 +157,7 @@ def iniciar_app():
     ).grid(row=5, column=0, columnspan=2, pady=20)
 
 <<<<<<< HEAD
-    # ---------- ABA ACERVO ----------
+
     ttk.Label(aba_acervo, text="Cadastrar / Atualizar Livro", style="Titulo.TLabel").grid(
         row=0, column=0, columnspan=2, padx=20, pady=(20, 15), sticky="w"
 =======
@@ -225,10 +224,10 @@ def iniciar_app():
                 livro["disponivel"],
             ))
 
-        # Atualiza a combobox de livros da aba Cadastrar sempre que o acervo mudar
+
         combo_livro["values"] = carregar_titulos_acervo()
 
-    # ---------- ABA EMPRÉSTIMOS ATIVOS ----------
+
     colunas = ("id", "aluno", "serie", "livro", "data_emprestimo", "data_devolucao_prevista")
     titulos_colunas = ["ID", "Aluno", "Série", "Livro", "Emprestado em", "Devolver até"]
 
@@ -376,7 +375,7 @@ def iniciar_app():
         frame_botoes_ativos, text="Atualizar Lista", style="Amarelo.TButton", command=atualizar_lista_ativos
     ).pack(side="left", padx=5)
 
-    # ---------- ABA ATENÇÃO ----------
+
     ttk.Label(aba_atencao, text="Prazos Vencendo", style="Titulo.TLabel").pack(
         anchor="w", padx=15, pady=(15, 10)
     )
