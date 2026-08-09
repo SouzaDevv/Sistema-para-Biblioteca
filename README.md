@@ -44,4 +44,4 @@ python main.py
 
 ## Autor
 
-Desenvolvido por Giovanni, estudante de Ciência de Dados na FATEC Votorantim.
+Desenvolvido por mim, estudante de Ciência de Dados na FATEC Votorantim.
