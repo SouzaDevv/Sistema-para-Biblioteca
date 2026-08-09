@@ -2,7 +2,6 @@ import tkinter as tk
 from tkinter import ttk, messagebox
 from programa import registrar_emprestimo, devolver_livro, listar_emprestimos_ativos, listar_vencendo
 
-# ---------- Cores da escola ----------
 AMARELO = "#F5C400"
 PRETO = "#1A1A1A"
 BRANCO = "#FFFFFF"
@@ -14,7 +13,7 @@ def iniciar_app():
     janela.geometry("750x480")
     janela.configure(bg=PRETO)
 
-    # ---------- Estilo geral ----------
+
     estilo = ttk.Style()
     estilo.theme_use("clam")
 
@@ -33,7 +32,7 @@ def iniciar_app():
         foreground=[("selected", PRETO)],
     )
 
-    # Frames internos
+
     estilo.configure("TFrame", background=BRANCO)
 
     # Labels
@@ -51,7 +50,7 @@ def iniciar_app():
     )
     estilo.map("Amarelo.TButton", background=[("active", "#D9AC00")])
 
-    # Tabela (Treeview)
+
     estilo.configure(
         "Treeview",
         background=BRANCO,
@@ -79,7 +78,7 @@ def iniciar_app():
     abas.add(aba_ativos, text="Empréstimos Ativos")
     abas.add(aba_atencao, text="Atenção")
 
-    # ---------- ABA CADASTRAR ----------
+
     ttk.Label(aba_cadastrar, text="Novo Empréstimo", style="Titulo.TLabel").grid(
         row=0, column=0, columnspan=2, padx=20, pady=(20, 15), sticky="w"
     )
@@ -125,7 +124,7 @@ def iniciar_app():
         aba_cadastrar, text="Registrar Empréstimo", style="Amarelo.TButton", command=ao_clicar_registrar
     ).grid(row=4, column=0, columnspan=2, pady=20)
 
-    # ---------- ABA EMPRÉSTIMOS ATIVOS ----------
+
     colunas = ("id", "aluno", "livro", "data_emprestimo", "data_devolucao_prevista")
 
     ttk.Label(aba_ativos, text="Empréstimos Ativos", style="Titulo.TLabel").pack(
@@ -176,7 +175,7 @@ def iniciar_app():
         frame_botoes_ativos, text="Atualizar Lista", style="Amarelo.TButton", command=atualizar_lista_ativos
     ).pack(side="left", padx=5)
 
-    # ---------- ABA ATENÇÃO ----------
+
     ttk.Label(aba_atencao, text="Prazos Vencendo", style="Titulo.TLabel").pack(
         anchor="w", padx=15, pady=(15, 10)
     )
@@ -202,7 +201,7 @@ def iniciar_app():
                 emprestimo["data_devolucao_prevista"],
             ))
 
-        # Atualiza o texto da aba com o contador
+
         quantidade = len(itens_vencendo)
         if quantidade > 0:
             abas.tab(aba_atencao, text=f"⚠️ Atenção ({quantidade})")
