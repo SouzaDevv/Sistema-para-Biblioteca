@@ -41,6 +41,10 @@ def iniciar_app():
         foreground=[("selected", PRETO)],
     )
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> a07d9a29f0f781f9493ffb69a6ed902ba447f804
     estilo.configure("TFrame", background=BRANCO)
     estilo.configure("TLabel", background=BRANCO, foreground=PRETO, font=("Segoe UI", 10))
     estilo.configure("Titulo.TLabel", background=BRANCO, foreground=PRETO, font=("Segoe UI", 13, "bold"))
@@ -55,6 +59,10 @@ def iniciar_app():
     )
     estilo.map("Amarelo.TButton", background=[("active", "#D9AC00")])
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> a07d9a29f0f781f9493ffb69a6ed902ba447f804
     estilo.configure(
         "Treeview",
         background=BRANCO,
@@ -149,9 +157,17 @@ def iniciar_app():
         aba_cadastrar, text="Registrar Empréstimo", style="Amarelo.TButton", command=ao_clicar_registrar
     ).grid(row=5, column=0, columnspan=2, pady=20)
 
+<<<<<<< HEAD
     # ---------- ABA ACERVO ----------
     ttk.Label(aba_acervo, text="Cadastrar / Atualizar Livro", style="Titulo.TLabel").grid(
         row=0, column=0, columnspan=2, padx=20, pady=(20, 15), sticky="w"
+=======
+
+    colunas = ("id", "aluno", "livro", "data_emprestimo", "data_devolucao_prevista")
+
+    ttk.Label(aba_ativos, text="Empréstimos Ativos", style="Titulo.TLabel").pack(
+        anchor="w", padx=15, pady=(15, 10)
+>>>>>>> a07d9a29f0f781f9493ffb69a6ed902ba447f804
     )
 
     ttk.Label(aba_acervo, text="Título do livro:").grid(row=1, column=0, padx=20, pady=8, sticky="w")
@@ -387,6 +403,10 @@ def iniciar_app():
                 emprestimo["data_devolucao_prevista"],
             ))
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> a07d9a29f0f781f9493ffb69a6ed902ba447f804
         quantidade = len(itens_vencendo)
         if quantidade > 0:
             abas.tab(aba_atencao, text=f"⚠️ Atenção ({quantidade})")
