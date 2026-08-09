@@ -31,7 +31,7 @@ def iniciar_app():
         foreground=[("selected", PRETO)],
     )
 
-    # Frames internos
+
     estilo.configure("TFrame", background=BRANCO)
     estilo.configure("TLabel", background=BRANCO, foreground=PRETO, font=("Segoe UI", 10))
     estilo.configure("Titulo.TLabel", background=BRANCO, foreground=PRETO, font=("Segoe UI", 13, "bold"))
@@ -46,7 +46,7 @@ def iniciar_app():
     )
     estilo.map("Amarelo.TButton", background=[("active", "#D9AC00")])
 
-    # Tabela (Treeview)
+
     estilo.configure(
         "Treeview",
         background=BRANCO,
@@ -126,7 +126,7 @@ def iniciar_app():
         aba_cadastrar, text="Registrar Empréstimo", style="Amarelo.TButton", command=ao_clicar_registrar
     ).grid(row=5, column=0, columnspan=2, pady=20)
 
-    # ---------- ABA EMPRÉSTIMOS ATIVOS ----------
+
     colunas = ("id", "aluno", "livro", "data_emprestimo", "data_devolucao_prevista")
 
     ttk.Label(aba_ativos, text="Empréstimos Ativos", style="Titulo.TLabel").pack(
@@ -205,7 +205,7 @@ def iniciar_app():
                 emprestimo["data_devolucao_prevista"],
             ))
 
-        # Atualiza o texto da aba com o contador
+
         quantidade = len(itens_vencendo)
         if quantidade > 0:
             abas.tab(aba_atencao, text=f"⚠️ Atenção ({quantidade})")
