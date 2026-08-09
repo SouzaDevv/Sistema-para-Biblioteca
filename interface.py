@@ -191,7 +191,9 @@ def iniciar_app():
         for linha in tabela_atencao.get_children():
             tabela_atencao.delete(linha)
 
-        for emprestimo in listar_vencendo():
+        itens_vencendo = listar_vencendo()
+
+        for emprestimo in itens_vencendo:
             tabela_atencao.insert("", "end", values=(
                 emprestimo["id"],
                 emprestimo["aluno"],
@@ -199,6 +201,13 @@ def iniciar_app():
                 emprestimo["data_emprestimo"],
                 emprestimo["data_devolucao_prevista"],
             ))
+
+        # Atualiza o texto da aba com o contador
+        quantidade = len(itens_vencendo)
+        if quantidade > 0:
+            abas.tab(aba_atencao, text=f"⚠️ Atenção ({quantidade})")
+        else:
+            abas.tab(aba_atencao, text="Atenção")
 
     ttk.Button(
         aba_atencao, text="Atualizar Lista", style="Amarelo.TButton", command=atualizar_lista_atencao
