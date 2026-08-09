@@ -11,14 +11,13 @@ BRANCO = "#FFFFFF"
 def iniciar_app():
     janela = tk.Tk()
     janela.title("Sistema de Empréstimo de Livros")
-    janela.geometry("750x480")
+    janela.geometry("800x480")
     janela.configure(bg=PRETO)
 
     # ---------- Estilo geral ----------
     estilo = ttk.Style()
     estilo.theme_use("clam")
 
-    # Abas
     estilo.configure("TNotebook", background=PRETO, borderwidth=0)
     estilo.configure(
         "TNotebook.Tab",
@@ -33,14 +32,10 @@ def iniciar_app():
         foreground=[("selected", PRETO)],
     )
 
-    # Frames internos
     estilo.configure("TFrame", background=BRANCO)
-
-    # Labels
     estilo.configure("TLabel", background=BRANCO, foreground=PRETO, font=("Segoe UI", 10))
     estilo.configure("Titulo.TLabel", background=BRANCO, foreground=PRETO, font=("Segoe UI", 13, "bold"))
 
-    # Botões
     estilo.configure(
         "Amarelo.TButton",
         background=AMARELO,
@@ -51,7 +46,6 @@ def iniciar_app():
     )
     estilo.map("Amarelo.TButton", background=[("active", "#D9AC00")])
 
-    # Tabela (Treeview)
     estilo.configure(
         "Treeview",
         background=BRANCO,
@@ -88,21 +82,26 @@ def iniciar_app():
     entrada_aluno = tk.Entry(aba_cadastrar, width=35, relief="solid", borderwidth=1)
     entrada_aluno.grid(row=1, column=1, padx=20, pady=8)
 
-    ttk.Label(aba_cadastrar, text="Livro:").grid(row=2, column=0, padx=20, pady=8, sticky="w")
-    entrada_livro = tk.Entry(aba_cadastrar, width=35, relief="solid", borderwidth=1)
-    entrada_livro.grid(row=2, column=1, padx=20, pady=8)
+    ttk.Label(aba_cadastrar, text="Série/turma (ex: 1º B):").grid(row=2, column=0, padx=20, pady=8, sticky="w")
+    entrada_serie = tk.Entry(aba_cadastrar, width=35, relief="solid", borderwidth=1)
+    entrada_serie.grid(row=2, column=1, padx=20, pady=8)
 
-    ttk.Label(aba_cadastrar, text="Prazo (dias):").grid(row=3, column=0, padx=20, pady=8, sticky="w")
+    ttk.Label(aba_cadastrar, text="Livro:").grid(row=3, column=0, padx=20, pady=8, sticky="w")
+    entrada_livro = tk.Entry(aba_cadastrar, width=35, relief="solid", borderwidth=1)
+    entrada_livro.grid(row=3, column=1, padx=20, pady=8)
+
+    ttk.Label(aba_cadastrar, text="Prazo (dias):").grid(row=4, column=0, padx=20, pady=8, sticky="w")
     entrada_prazo = tk.Entry(aba_cadastrar, width=35, relief="solid", borderwidth=1)
-    entrada_prazo.grid(row=3, column=1, padx=20, pady=8)
+    entrada_prazo.grid(row=4, column=1, padx=20, pady=8)
 
     def ao_clicar_registrar():
         aluno = entrada_aluno.get().strip()
+        serie = entrada_serie.get().strip()
         livro = entrada_livro.get().strip()
         prazo_texto = entrada_prazo.get().strip()
 
-        if not aluno or not livro or not prazo_texto:
-            messagebox.showwarning("Campos vazios", "Preencha aluno, livro e prazo.")
+        if not aluno or not serie or not livro or not prazo_texto:
+            messagebox.showwarning("Campos vazios", "Preencha aluno, série, livro e prazo.")
             return
 
         try:
@@ -111,10 +110,11 @@ def iniciar_app():
             messagebox.showwarning("Prazo inválido", "O prazo precisa ser um número de dias (ex: 7).")
             return
 
-        data_devolucao = registrar_emprestimo(aluno, livro, dias_prazo)
+        data_devolucao = registrar_emprestimo(aluno, serie, livro, dias_prazo)
         messagebox.showinfo("Sucesso", f"Empréstimo registrado!\nDevolver até: {data_devolucao}")
 
         entrada_aluno.delete(0, tk.END)
+        entrada_serie.delete(0, tk.END)
         entrada_livro.delete(0, tk.END)
         entrada_prazo.delete(0, tk.END)
 
@@ -123,19 +123,20 @@ def iniciar_app():
 
     ttk.Button(
         aba_cadastrar, text="Registrar Empréstimo", style="Amarelo.TButton", command=ao_clicar_registrar
-    ).grid(row=4, column=0, columnspan=2, pady=20)
+    ).grid(row=5, column=0, columnspan=2, pady=20)
 
     # ---------- ABA EMPRÉSTIMOS ATIVOS ----------
-    colunas = ("id", "aluno", "livro", "data_emprestimo", "data_devolucao_prevista")
+    colunas = ("id", "aluno", "serie", "livro", "data_emprestimo", "data_devolucao_prevista")
+    titulos_colunas = ["ID", "Aluno", "Série", "Livro", "Emprestado em", "Devolver até"]
 
     ttk.Label(aba_ativos, text="Empréstimos Ativos", style="Titulo.TLabel").pack(
         anchor="w", padx=15, pady=(15, 10)
     )
 
     tabela_ativos = ttk.Treeview(aba_ativos, columns=colunas, show="headings", height=12)
-    for coluna, titulo in zip(colunas, ["ID", "Aluno", "Livro", "Emprestado em", "Devolver até"]):
+    for coluna, titulo in zip(colunas, titulos_colunas):
         tabela_ativos.heading(coluna, text=titulo)
-        tabela_ativos.column(coluna, width=120)
+        tabela_ativos.column(coluna, width=110)
     tabela_ativos.pack(padx=15, pady=5, fill="both", expand=True)
 
     def atualizar_lista_ativos():
@@ -146,6 +147,7 @@ def iniciar_app():
             tabela_ativos.insert("", "end", values=(
                 emprestimo["id"],
                 emprestimo["aluno"],
+                emprestimo["serie"],
                 emprestimo["livro"],
                 emprestimo["data_emprestimo"],
                 emprestimo["data_devolucao_prevista"],
@@ -182,9 +184,9 @@ def iniciar_app():
     )
 
     tabela_atencao = ttk.Treeview(aba_atencao, columns=colunas, show="headings", height=12)
-    for coluna, titulo in zip(colunas, ["ID", "Aluno", "Livro", "Emprestado em", "Devolver até"]):
+    for coluna, titulo in zip(colunas, titulos_colunas):
         tabela_atencao.heading(coluna, text=titulo)
-        tabela_atencao.column(coluna, width=120)
+        tabela_atencao.column(coluna, width=110)
     tabela_atencao.pack(padx=15, pady=5, fill="both", expand=True)
 
     def atualizar_lista_atencao():
@@ -197,12 +199,12 @@ def iniciar_app():
             tabela_atencao.insert("", "end", values=(
                 emprestimo["id"],
                 emprestimo["aluno"],
+                emprestimo["serie"],
                 emprestimo["livro"],
                 emprestimo["data_emprestimo"],
                 emprestimo["data_devolucao_prevista"],
             ))
 
-        # Atualiza o texto da aba com o contador
         quantidade = len(itens_vencendo)
         if quantidade > 0:
             abas.tab(aba_atencao, text=f"⚠️ Atenção ({quantidade})")

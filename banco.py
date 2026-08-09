@@ -9,6 +9,7 @@ def criar_tabela():
         CREATE TABLE IF NOT EXISTS emprestimos (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             aluno TEXT NOT NULL,
+            serie TEXT NOT NULL,
             livro TEXT NOT NULL,
             data_emprestimo TEXT NOT NULL,
             data_devolucao_prevista TEXT NOT NULL,
@@ -27,7 +28,7 @@ def listar_emprestimos_ativos():
     cursor = conexao.cursor()
 
     cursor.execute("""
-        SELECT id, aluno, livro, data_emprestimo, data_devolucao_prevista, status
+        SELECT id, aluno, serie, livro, data_emprestimo, data_devolucao_prevista, status
         FROM emprestimos
         WHERE status = 'Emprestado'
     """)
@@ -38,14 +39,14 @@ def listar_emprestimos_ativos():
     return linhas
 
 
-def salvar_emprestimo(aluno, livro, data_emprestimo, data_devolucao_prevista, status):
+def salvar_emprestimo(aluno, serie, livro, data_emprestimo, data_devolucao_prevista, status):
     conexao = sqlite3.connect("biblioteca.db")
     cursor = conexao.cursor()
 
     cursor.execute("""
-        INSERT INTO emprestimos (aluno, livro, data_emprestimo, data_devolucao_prevista, status)
-        VALUES (?, ?, ?, ?, ?)
-    """, (aluno, livro, str(data_emprestimo), str(data_devolucao_prevista), status))
+        INSERT INTO emprestimos (aluno, serie, livro, data_emprestimo, data_devolucao_prevista, status)
+        VALUES (?, ?, ?, ?, ?, ?)
+    """, (aluno, serie, livro, str(data_emprestimo), str(data_devolucao_prevista), status))
 
     conexao.commit()
     conexao.close()

@@ -2,12 +2,13 @@ from datetime import date, timedelta, datetime
 from banco import salvar_emprestimo, atualizar_status_emprestimo, listar_emprestimos_ativos
 
 
-def registrar_emprestimo(aluno, livro, dias_prazo):
+def registrar_emprestimo(aluno, serie, livro, dias_prazo):
     hoje = date.today()
     data_devolucao = hoje + timedelta(days=dias_prazo)
 
     salvar_emprestimo(
         aluno=aluno,
+        serie=serie,
         livro=livro,
         data_emprestimo=hoje,
         data_devolucao_prevista=data_devolucao,
