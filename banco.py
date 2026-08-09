@@ -24,7 +24,7 @@ def criar_tabela():
 
 def listar_emprestimos_ativos():
     conexao = sqlite3.connect("biblioteca.db")
-    conexao.row_factory = sqlite3.Row  # faz cada linha se comportar como dicionário
+    conexao.row_factory = sqlite3.Row 
     cursor = conexao.cursor()
 
     cursor.execute("""
